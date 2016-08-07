@@ -3,14 +3,17 @@ var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
+
+
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://jordiie11:password11@ds145315.mlab.com:45315/jivoxdb';
+
+
 var bodyParser = require("body-parser");
 var app = express();
 
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+
 
 var emailId, username, password, userType ;
 

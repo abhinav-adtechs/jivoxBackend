@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -15,6 +16,8 @@
     "mongodb": "^2.2.5",
     "mongoose": "^4.5.8",
     "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.1.0",
     "serve-favicon": "~2.3.0",
     "validator": "^5.5.0"
   }
