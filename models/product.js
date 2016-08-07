@@ -15,5 +15,13 @@ var ProductSchema = new Schema({
     productRating: {
         type: Number,
         required: true
+    },
+    sellerId: {
+        type: Number,
+        unique: false,
+        required: true 
     }
 });
+
+module.exports = mongoose.model('Product', ProductSchema);
+ 

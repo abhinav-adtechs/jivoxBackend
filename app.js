@@ -5,10 +5,14 @@ var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var passport	  = require('passport');
 var config      = require('./config/database'); 
-var Buyer        = require('./models/buyer'); 
+
 var port        = process.env.PORT || 8080;
 var jwt         = require('jwt-simple');
 var favicon = require('serve-favicon');
+
+
+var Buyer        = require('./models/buyer'); 
+var Product      = require("./models/product") ;
 
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -94,8 +98,47 @@ apiRoutes.post('/authenticate', function(req, res) {
 
 
 
+apiRoutes.post('/addProduct', function(req, res) {
+    if(!req.body.productname || !req.body.productId || !req.body.productRating || !req.body.sellerId){
+      return res.status(403).json({
+        "success" : false,
+        "message" : "Please add all fields."
+      });
+    }else{
+      var newProduct = new Product({
+      productname: req.body.productname,
+      productId: req.body.productId,
+      productRating: req.body.productRating,
+      sellerId: req.body.sellerId
+    });
+    // save the user
+    newProduct.save(function(err) {
+      if (err) {
+        return res.json({success: false, msg: 'Error in saving to database.'});
+      }
+      res.json({success: true, msg: 'Successful Added product to database.'});
+    });
+    }
+})
 
 
+apiRoutes.get('/productList', function(req, res) {
+  Product.find({}, function(err, products) {
+    if(err){
+      res.status(403).json({
+        "success" : false,
+        "message" : "unable to query"
+      });
+    }else{
+        var productMap = {};
+        products.forEach(function(product) {
+        
+        productMap[product._id] = product;
+    });
+    }
+    res.send(productMap);  
+  });
+});
 
 
 
@@ -144,3 +187,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
